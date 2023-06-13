@@ -34,7 +34,7 @@ function CreateRecipe({ session }) {
 
   const [parent, enableAnimations] = useAutoAnimate();
   const token = session.user.token;
-  const userId = session.user.account[0].user_id;
+  const userId = session.user.accountData[0].user_id;
   const router = useRouter()
 
   //GET - fetches all categories

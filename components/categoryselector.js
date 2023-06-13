@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "./sidebar";
 import MobileMenu from "./mobilemenu";
 import { useMediaQuery } from "@/hooks/hooks";
-import { useSession } from "next-auth/react";
-import axios from "axios";
+
 
 function CategorySelector({session}) {
   // const fetcher = (...args) => fetch(...args).then(res => res.json())
@@ -19,13 +18,13 @@ function CategorySelector({session}) {
       });
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.log('Categories cannot be fetched');
     }
   };
 
   const fetchCategories = async () => {
-    const apiCall = await getAllCategories()
-    setCategories(apiCall)
+    const fetchedCategories = await getAllCategories()
+    setCategories(fetchedCategories)
   };
 
   useEffect(() => {

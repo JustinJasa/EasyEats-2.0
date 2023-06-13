@@ -18,8 +18,8 @@ const Comments = ({ toggleModal, token, session, id }) => {
   const [newComment, setNewComment] = useState("");
   const [parent, enableAnimations] = useAutoAnimate();
 
-  const userId = session.user.account[0].user_id;
-  const username = session.user.account[0].username;
+  const userId = session.user.accountData[0].user_id;
+  const username = session.user.accountData[0].username;
 
   const getRecipeComments = async (recipeId) => {
     try {

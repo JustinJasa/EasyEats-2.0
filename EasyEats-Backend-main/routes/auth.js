@@ -8,27 +8,27 @@ const routerAuth = express.Router()
 
 // authenticates user
 routerAuth.post("/login", async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   try {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
      // takes an email and password as a request
     const { email, password } = req.body;
 
     // checks if the email exists in database
-    const account = await getUserByEmail(email);
-    if (account.length == 0) {
+    const accountData = await getUserByEmail(email);
+    if (accountData.length == 0) {
       throw "Email is not registered";
     }
 
     // if user exists - compares password
-    const isValid = await compare(password, account[0].password);
+    const isValid = await compare(password, accountData[0].password);
     if (!isValid) {
       throw "Incorrect password";
     }
 
     // if credentials are correct sends back a json web toket
-    const token = jwt.sign({ id: account.id }, 'cat123', { expiresIn: "1h" });
-    res.status(200).json({ success:1, message:"login successful", token, account });
+    const token = jwt.sign({ id: accountData.id }, process.env.JWT_TOKEN_KEY, { expiresIn: "1h" });
+    res.status(200).json({ success:1, message:"login successful", token, accountData });
   } 
   catch (error) {
     switch(error) {
@@ -64,10 +64,10 @@ routerAuth.post("/signup", async (req, res) => {
     }
     // bcrypts password
     const salt = genSaltSync(10)
-    password = hashSync(password,salt)
+    const hashValue = hashSync(password,salt)
 
     // creates new user
-    const user = await createUser(username, email, password)
+    const user = await createUser(username, email, hashValue)
     
     // generate jwt token
     const token = jwt.sign({ id: user.id }, 'cat123', { expiresIn: "1h" });

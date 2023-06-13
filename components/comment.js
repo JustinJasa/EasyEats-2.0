@@ -15,7 +15,7 @@ function CommentComponent({ comment, username, date, userId, recipeId, commentId
       const response = await axios.put(
         `http://localhost:8000/recipes/${recipeId}/comments/${commentId}/edit`,
         {
-          comment: commentText
+          commentText: commentText
         },
         {
           headers: { Authorization: `Bearer ${token}`},
@@ -23,7 +23,7 @@ function CommentComponent({ comment, username, date, userId, recipeId, commentId
       );
       return response.data;
     } catch(error) {
-      console.log(error);
+      console.log('Comment cannot be updated!');
     }
   };
 
@@ -37,7 +37,7 @@ function CommentComponent({ comment, username, date, userId, recipeId, commentId
       );
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.log('Comment cannot be deleted!');
     }
   };
 
@@ -46,14 +46,14 @@ function CommentComponent({ comment, username, date, userId, recipeId, commentId
     setCommentVisible(false);
     createSuccessToast("Comment Successfully Deleted!");
     setDeleteModal(!deleteModal);
-    return response.data;
+    return await response.data;
   }
 
   const editCommentHandler = async (id) => {
     const response = updateCommentRequest(id);
     createSuccessToast("Comment Successfully Updated!");
     setEditModal(!editModal);
-    return response.data;
+    return await response.data;
   }
 
   return (
@@ -74,7 +74,7 @@ function CommentComponent({ comment, username, date, userId, recipeId, commentId
             </div>
             <p className="pt-4 pb-4 max-h-32 overflow-y-auto">{commentText}</p>
             {
-              userId === session.user.account[0].user_id 
+              userId === session.user.accountData[0].user_id 
               ? 
               <div className="flex items-center justify-between">
                 <button className="text-lg p-1 cursor-pointer" onClick={() => setEditModal(!editModal)}>✏️Edit</button>

@@ -35,10 +35,10 @@ function Mainbar({ session }) {
           </div>
         </Link>
         {session && (
-            <div className="flex bg-green-600 justify-center items-center mr-4 rounded-lg p-2 text-white hover:bg-green-800" onClick={() => router.push(`/users/${session.user.account[0].user_id}`)}>
+            <div className="flex bg-green-600 justify-center items-center mr-4 rounded-lg p-2 text-white hover:bg-green-800" onClick={() => router.push(`/users/${session.user.accountData[0].user_id}`)}>
               <UserIcon className="h-8 w-8 sm:h-4 sm:w-4 mr-2" />
               <p className="hidden sm:block">
-                {session.user.account[0].username}
+                {session.user.accountData[0].username}
               </p>
             </div>
         )}

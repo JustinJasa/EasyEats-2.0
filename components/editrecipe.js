@@ -35,7 +35,7 @@ function EditRecipe({ session }) {
 
   const [parent, enableAnimations] = useAutoAnimate();
   const token = session.user.token;
-  const userId = session.user.account[0].user_id;
+  const userId = session.user.accountData[0].user_id;
   const router = useRouter();
   const recipeId = router.query.recipeId;
 

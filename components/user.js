@@ -11,9 +11,9 @@ function User({ session }) {
   const [editProfileModal, setEditProfileModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const accountName = session.user.account[0].username;
-  const accountEmail = session.user.account[0].email;
-  const accountId = session.user.account[0].user_id;
+  const accountName = session.user.accountData[0].username;
+  const accountEmail = session.user.accountData[0].email;
+  const accountId = session.user.accountData[0].user_id;
   const token = session.user.token;
 
   const router = useRouter();
@@ -96,11 +96,11 @@ function User({ session }) {
       {session && (
         <div>
           <p className="text-8xl bg-gray-300 text-center p-12 rounded-full mb-4">
-            {session.user.account[0].username.charAt(0).toUpperCase()}
+            {session.user.accountData[0].username.charAt(0).toUpperCase()}
           </p>
           <p className="text-center text-4xl font-md">{`Hey ${accountName}!`}</p>
           <p className="text-center text-md text-gray-400 mt-2 mb-2">
-            @{session.user.account[0].username}
+            @{session.user.accountData[0].username}
           </p>
         </div>
       )}

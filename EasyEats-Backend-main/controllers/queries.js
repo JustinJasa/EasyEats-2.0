@@ -1,6 +1,12 @@
 //importing the database
 import pool from '../services/db.js'
 
+/**
+ To access the database, the query function from the mysql2 package is used.
+ This function is used to execute SQL statements to the database. The results of these
+ statements are stored and handled appropriately.
+ */
+
 // Get name of ALL categories
 export const getAllCategories = async () => {
     const [rows] = await pool.query(`
