@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  frontend_container:
+    container_name: frontend_container
+    build: . # Update this with the path to your frontend Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - REACT_APP_BACKEND_HOST=backend_container
+    depends_on:
+      - backend_container
+    networks:
+      - app_network
+
+  backend_container:
+    container_name: backend_container
+    build: ./EasyEats-Backend-main # Update this with the path to your backend Dockerfile
+    ports:
+      - '8000:8000'
+    environment:
+      - DB_HOST=db_container
+      - DB_PASSWORD=12345
+    depends_on:
+      - db_container
+    networks:
+      - app_network
+
+  db_container:
+    container_name: db_container
+    build: ./EasyEats-Backend-main/database
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_DATABASE=easy_eats
+    ports:
+      - '3307:3306'
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    name: app_network
+
+
+# to run manually,
+# docker network create app_network
+# docker build -t frontend_image .
+# docker build -t backend_image ./EasyEats-Backend-main
+# docker build -t db_image ./EasyEats-Backend-main/database
+
+# docker run -d -p 3306:3306 --name db_container --network app_network db_image
+# docker run -d -p 8000:8000 --name backend_container --network app_network backend_image
+# docker run -d -p 3000:3000 --name frontend_container --network app_network frontend_image
