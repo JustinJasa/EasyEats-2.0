@@ -24,7 +24,7 @@ const Comments = ({ toggleModal, token, session, id }) => {
   const getRecipeComments = async (recipeId) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/recipes/${recipeId}/comments/all`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/comments/all`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -38,7 +38,7 @@ const Comments = ({ toggleModal, token, session, id }) => {
   const postRecipeComment = async (recipeId, userId, comment) => {
     try {
       const response = await axios.post(
-        `http://localhost:8000/recipes/${recipeId}/comments/new`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/comments/new`,
         {
           userId: userId,
           comment: comment,

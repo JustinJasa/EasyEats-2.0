@@ -32,7 +32,7 @@ function PinGallery({ session }) {
 
   const getAllRecipes = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/recipes/all`, {
+      const response = await axios.get(`${process.env.DOMAIN_NAME}/recipes/all`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPins(response.data);
@@ -43,7 +43,7 @@ function PinGallery({ session }) {
 
   const getSearchedRecipesByName = async () => {
     // If search query is empty, fetch all recipes route
-    const route = searchQuery.search === "" ? `http://localhost:8000/recipes/all` : `http://localhost:8000/recipes/name/${searchQuery.search}`
+    const route = searchQuery.search === "" ? `${process.env.DOMAIN_NAME}/recipes/all` : `${process.env.DOMAIN_NAME}/recipes/name/${searchQuery.search}`
     try {
       const response = await axios.get(
         route,
@@ -59,7 +59,7 @@ function PinGallery({ session }) {
 
   const getRecipesById = async () => {
     // If search query is empty, fetch all recipes route
-    const route = `http://localhost:8000/recipes/user/${searchQuery.userName}`
+    const route = `${process.env.DOMAIN_NAME}/recipes/user/${searchQuery.userName}`
     try {
       const response = await axios.get(
         route,
@@ -75,7 +75,7 @@ function PinGallery({ session }) {
 
   const getSearchedRecipesByCategory = async () => {
     try {
-      const route = searchQuery.category === "" ? `http://localhost:8000/recipes/all` : `http://localhost:8000/recipes/category/${searchQuery.category}`
+      const route = searchQuery.category === "" ? `${process.env.DOMAIN_NAME}/recipes/all` : `${process.env.DOMAIN_NAME}/recipes/category/${searchQuery.category}`
       const response = await axios.get(
         route,
         {

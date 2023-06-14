@@ -3,15 +3,13 @@ import { headers } from "@/next.config";
 import axios from "axios";
 import { authAxios } from "./authAxios";
 
-// const token = 
-
 // GET - All categories
 
 
 // GET - All recipes
 export const getAllRecipes = async () => {
   try {
-    const response = await axios.get(`http://localhost:8000/recipes/all`);
+    const response = await axios.get(`${process.env.DOMAIN_NAME}/recipes/all`);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -22,7 +20,7 @@ export const getAllRecipes = async () => {
 export const getRecipesByCategoryName = async (categoryName) => {
   try {
     const response = await axios.get(
-      `http://localhost:8000/recipes/category/${categoryName}`
+      `${process.env.DOMAIN_NAME}/recipes/category/${categoryName}`
     );
     return response.data;
   } catch (error) {
@@ -34,7 +32,7 @@ export const getRecipesByCategoryName = async (categoryName) => {
 export const getRecipesByRecipeName = async (recipeName) => {
   try {
     const response = await axios.get(
-      `http://localhost:8000/recipes/name/${recipeName}`
+      `${process.env.DOMAIN_NAME}/recipes/name/${recipeName}`
     );
     return response.data;
   } catch (error) {
@@ -48,7 +46,7 @@ export const getRecipesByRecipeName = async (recipeName) => {
 export const getRecipeCategories = async (recipeId) => {
   try {
     const response = await axios.get(
-      `http://localhost:8000/recipes/${recipeId}/categories`
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/categories`
     );
     return response.data;
   } catch (error) {
@@ -60,7 +58,7 @@ export const getRecipeCategories = async (recipeId) => {
 export const getRecipeIngredients = async (recipeId) => {
   try {
     const response = await axios.get(
-      `http://localhost:8000/recipes/${recipeId}/ingredients`
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/ingredients`
     );
     return response.data;
   } catch (error) {
@@ -72,7 +70,7 @@ export const getRecipeIngredients = async (recipeId) => {
 export const getRecipeSteps = async (recipeId) => {
   try {
     const response = await axios.get(
-      `http://localhost:8000/recipes/${recipeId}/steps`
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/steps`
     );
     return response.data;
   } catch (error) {
@@ -84,7 +82,7 @@ export const getRecipeSteps = async (recipeId) => {
 export const getRecipeComments = async (recipeId) => {
   try {
     const response = await axios.get(
-      `http://localhost:8000/recipes/${recipeId}/comments/all`
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/comments/all`
     );
     return response.data;
   } catch (error) {
@@ -96,7 +94,7 @@ export const getRecipeComments = async (recipeId) => {
 export const getRecipeComment = async (recipeId, commentId) => {
   try {
     const response = await axios.get(
-      `http://localhost:8000/recipes/${recipeId}/comments/${commentId}`
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/comments/${commentId}`
     );
     return response.data;
   } catch (error) {
@@ -138,7 +136,7 @@ export const postRecipeInfo = async (
   price
 ) => {
   try {
-    const response = await axios.post(`http://localhost:8000/recipes/new`, {
+    const response = await axios.post(`${process.env.DOMAIN_NAME}/recipes/new`, {
       userId: userId,
       name: name,
       description: description,
@@ -156,7 +154,7 @@ export const postRecipeInfo = async (
 export const postRecipeImages = async (recipeId, formData) => {
     try {
         const response = await axios.post(
-          `http://localhost:8000/recipes/${recipeId}/images/new`,
+          `${process.env.DOMAIN_NAME}/recipes/${recipeId}/images/new`,
           formData,
           {
             headers: {
@@ -175,7 +173,7 @@ export const postRecipeImages = async (recipeId, formData) => {
 export const postRecipeCategories = async (recipeId, categories) => {
   try {
     const response = await axios.post(
-      `http://localhost:8000/recipes/${recipeId}/categories/new`,
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/categories/new`,
       {
         categories: categories,
       }
@@ -190,7 +188,7 @@ export const postRecipeCategories = async (recipeId, categories) => {
 export const postRecipeIngredients = async (recipeId, ingredients) => {
   try {
     const response = await axios.post(
-      `http://localhost:8000/recipes/${recipeId}/ingredients/new`,
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/ingredients/new`,
       {
         ingredients: ingredients,
       }
@@ -205,7 +203,7 @@ export const postRecipeIngredients = async (recipeId, ingredients) => {
 export const postRecipeSteps = async (recipeId, steps) => {
   try {
     const response = await axios.post(
-      `http://localhost:8000/recipes/${recipeId}/steps/new`,
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/steps/new`,
       {
         steps: steps,
       }
@@ -220,7 +218,7 @@ export const postRecipeSteps = async (recipeId, steps) => {
 export const postRecipeComment = async (recipeId, userId, comment, rating) => {
   try {
     const response = await axios.post(
-      `http://localhost:8000/recipes/${recipeId}/comments/new`,
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/comments/new`,
       {
         userId: userId,
         comment: comment,
@@ -262,7 +260,7 @@ export const putRecipeInfo = async (
 ) => {
   try {
     const response = await axios.put(
-      `http://localhost:8000/recipes/${recipeId}/edit`,
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/edit`,
       {
         name: name,
         description: description,
@@ -281,7 +279,7 @@ export const putRecipeInfo = async (
 export const putRecipeCategories = async (recipeId, categories) => {
   try {
     const response = await axios.put(
-      `http://localhost:8000/recipes/${recipeId}/categories/edit`,
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/categories/edit`,
       {
         categories: categories,
       }
@@ -296,7 +294,7 @@ export const putRecipeCategories = async (recipeId, categories) => {
 export const putRecipeIngredients = async (recipeId, ingredients) => {
   try {
     const response = await axios.put(
-      `http://localhost:8000/recipes/${recipeId}/ingredients/edit`,
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/ingredients/edit`,
       {
         ingredients: ingredients,
       }
@@ -311,7 +309,7 @@ export const putRecipeIngredients = async (recipeId, ingredients) => {
 export const putRecipeSteps = async (recipeId, steps) => {
   try {
     const response = await axios.put(
-      `http://localhost:8000/recipes/${recipeId}/steps/edit`,
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/steps/edit`,
       {
         steps: steps,
       }
@@ -331,7 +329,7 @@ export const putRecipeComment = async (
 ) => {
   try {
     const response = await axios.put(
-      `http://localhost:8000/recipes/${recipeId}/comments/${commentId}/edit`,
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/comments/${commentId}/edit`,
       {
         comment: comment,
         rating: rating,
@@ -347,7 +345,7 @@ export const putRecipeComment = async (
 export const putUser = async (userId, username, password) => {
   try {
     const response = await axios.put(
-      `http://backend_container:8000/users/${userId}/edit`,
+      `${process.env.DOMAIN_NAME}/users/${userId}/edit`,
       {
         username: username,
         password: password,
@@ -367,7 +365,7 @@ export const putUser = async (userId, username, password) => {
 export const deleteRecipe = async (recipeId) => {
   try {
     const response = await axios.delete(
-      `http://localhost:8000/recipes/${recipeId}/delete`
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/delete`
     );
     return response.data;
   } catch (error) {
@@ -379,7 +377,7 @@ export const deleteRecipe = async (recipeId) => {
 export const deleteComment = async (recipeId, commentId) => {
   try {
     const response = await axios.delete(
-      `http://localhost:8000/recipes/${recipeId}/comments/${commentId}/delete`
+      `${process.env.DOMAIN_NAME}/recipes/${recipeId}/comments/${commentId}/delete`
     );
     return response.data;
   } catch (error) {
@@ -391,7 +389,7 @@ export const deleteComment = async (recipeId, commentId) => {
 export const deleteUser = async (userId) => {
   try {
     const response = await axios.delete(
-      `http://backend_container:8000/users/${userId}/delete`
+      `${process.env.DOMAIN_NAME}/users/${userId}/delete`
     );
     return response.data;
   } catch (error) {

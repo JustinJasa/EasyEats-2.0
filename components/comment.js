@@ -13,7 +13,7 @@ function CommentComponent({ comment, username, date, userId, recipeId, commentId
   const updateCommentRequest = async (commentId) => {
     try {
       const response = await axios.put(
-        `http://localhost:8000/recipes/${recipeId}/comments/${commentId}/edit`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/comments/${commentId}/edit`,
         {
           commentText: commentText
         },
@@ -30,7 +30,7 @@ function CommentComponent({ comment, username, date, userId, recipeId, commentId
   const deleteCommentRequest = async (commentId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8000/recipes/${recipeId}/comments/${commentId}/delete`, 
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/comments/${commentId}/delete`, 
         {
           headers: { Authorization: `Bearer ${token}` },
         }

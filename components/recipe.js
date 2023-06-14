@@ -29,7 +29,7 @@ function Recipe({recipeId, session}) {
   const getRecipeInfo = async (recipeId) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/recipes/${recipeId}`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -44,7 +44,7 @@ function Recipe({recipeId, session}) {
   const getRecipeCategories = async (recipeId) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/recipes/${recipeId}/categories`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/categories`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -59,7 +59,7 @@ function Recipe({recipeId, session}) {
   const getRecipeIngredients = async (recipeId) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/recipes/${recipeId}/ingredients`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/ingredients`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -74,7 +74,7 @@ function Recipe({recipeId, session}) {
   const getRecipeSteps = async (recipeId) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/recipes/${recipeId}/steps`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/steps`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -89,7 +89,7 @@ function Recipe({recipeId, session}) {
   const getRecipeImages = async (recipeId) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/recipes/${recipeId}/images`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/images`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -135,7 +135,7 @@ function Recipe({recipeId, session}) {
     async function fetchImageFiles() {
       const newData = await Promise.all(
         images.map(async (image) => {
-          const response = await fetch(`http://localhost:8000/recipes/${recipeId}/images/${image.image_id}`, {
+          const response = await fetch(`${process.env.DOMAIN_NAME}/recipes/${recipeId}/images/${image.image_id}`, {
             headers: { Authorization: `Bearer ${token}` },
           })
           const blob = await response.blob()

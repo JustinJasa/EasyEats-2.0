@@ -64,7 +64,7 @@ function EditRecipe({ session }) {
         selectedImages.map(async (image) => {
           console.log(image);
           const response = await fetch(
-            `http://localhost:8000/recipes/${recipeId}/images/${image.image_id}`,
+            `${process.env.DOMAIN_NAME}/recipes/${recipeId}/images/${image.image_id}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -86,7 +86,7 @@ function EditRecipe({ session }) {
   //GET - fetches all categories
   const getAllCategories = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/categories`, {
+      const response = await axios.get(`${process.env.DOMAIN_NAME}/categories`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;
@@ -99,7 +99,7 @@ function EditRecipe({ session }) {
   const getRecipeImages = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/recipes/${recipeId}/images`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/images`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -117,7 +117,7 @@ function EditRecipe({ session }) {
   const getRecipeBasicData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/recipes/${recipeId}`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -135,7 +135,7 @@ function EditRecipe({ session }) {
   const getRecipeCategories = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/recipes/${recipeId}/categories`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/categories`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -152,7 +152,7 @@ function EditRecipe({ session }) {
   const getRecipeIngredients = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/recipes/${recipeId}/ingredients`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/ingredients`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -169,7 +169,7 @@ function EditRecipe({ session }) {
   const getRecipeInstructions = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/recipes/${recipeId}/steps`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/steps`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -199,7 +199,7 @@ function EditRecipe({ session }) {
   ) => {
     try {
       const response = await axios.put(
-        `http://localhost:8000/recipes/${recipeId}/edit`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/edit`,
         {
           userId: userId,
           name: name,
@@ -222,7 +222,7 @@ function EditRecipe({ session }) {
   const updateRecipeCategories = async (recipeId, categories) => {
     try {
       const response = await axios.put(
-        `http://localhost:8000/recipes/${recipeId}/categories/edit`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/categories/edit`,
         {
           categories: categories,
         },
@@ -245,7 +245,7 @@ function EditRecipe({ session }) {
 
     try {
       const response = await axios.put(
-        `http://localhost:8000/recipes/${recipeId}/images/edit`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/images/edit`,
         formData,
         {
           headers: {
@@ -264,7 +264,7 @@ function EditRecipe({ session }) {
   const updaRecipeIngredients = async (recipeId, ingredients) => {
     try {
       const response = await axios.put(
-        `http://localhost:8000/recipes/${recipeId}/ingredients/edit`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/ingredients/edit`,
         {
           ingredients: ingredients,
         },
@@ -282,7 +282,7 @@ function EditRecipe({ session }) {
   const updateRecipeSteps = async (recipeId, steps) => {
     try {
       const response = await axios.put(
-        `http://localhost:8000/recipes/${recipeId}/steps/edit`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/steps/edit`,
         {
           steps: steps,
         },
