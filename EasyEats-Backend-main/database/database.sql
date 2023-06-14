@@ -17,7 +17,7 @@ CREATE TABLE recipes(
     time_hours INT,
     time_minutes INT,
     price_range VARCHAR(3), -- Can be $, $$, or $$$
-    date DATE, -- Date posted
+    date DATE,
 
     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
