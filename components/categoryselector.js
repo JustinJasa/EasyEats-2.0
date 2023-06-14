@@ -13,7 +13,7 @@ function CategorySelector({session}) {
 
   const getAllCategories = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/categories`, {
+      const response = await axios.get(`${process.env.DOMAIN_NAME}/categories`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;

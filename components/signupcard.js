@@ -9,7 +9,7 @@ import { createSuccessToast, createErrorToast } from "@/utils/toastNotification"
 
 const register = async (username, email, password) => {
   try {
-      const response = await axios.post(`http://localhost:8000/auth/signup`, {
+      const response = await axios.post(`${process.env.DOMAIN_NAME}/auth/signup`, {
           username: username,
           email: email,
           password: password

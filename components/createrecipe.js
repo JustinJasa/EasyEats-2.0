@@ -40,7 +40,7 @@ function CreateRecipe({ session }) {
   //GET - fetches all categories
   const getAllCategories = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/categories`, {
+      const response = await axios.get(`${process.env.DOMAIN_NAME}/categories`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;
@@ -65,7 +65,7 @@ function CreateRecipe({ session }) {
   ) => {
     try {
       const response = await axios.post(
-        `http://localhost:8000/recipes/new`,
+        `${process.env.DOMAIN_NAME}/recipes/new`,
         {
           userId: userId,
           name: name,
@@ -88,7 +88,7 @@ function CreateRecipe({ session }) {
   const postRecipeCategories = async (recipeId, categories) => {
     try {
       const response = await axios.post(
-        `http://localhost:8000/recipes/${recipeId}/categories/new`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/categories/new`,
         {
           categories: categories,
         },
@@ -116,7 +116,7 @@ function CreateRecipe({ session }) {
 
     try {
       const response = await axios.post(
-        `http://localhost:8000/recipes/${recipeId}/images/new`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/images/new`,
         imageData,
         {
           headers: {
@@ -135,7 +135,7 @@ function CreateRecipe({ session }) {
   const postRecipeIngredients = async (recipeId, ingredients) => {
     try {
       const response = await axios.post(
-        `http://localhost:8000/recipes/${recipeId}/ingredients/new`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/ingredients/new`,
         {
           ingredients: ingredients,
         },
@@ -153,7 +153,7 @@ function CreateRecipe({ session }) {
   const postRecipeSteps = async (recipeId, steps) => {
     try {
       const response = await axios.post(
-        `http://localhost:8000/recipes/${recipeId}/steps/new`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/steps/new`,
         {
           steps: steps,
         },

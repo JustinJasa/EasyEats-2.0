@@ -27,7 +27,7 @@ function Pin({ pin, index, session, searchParameter, id }) {
       }
 
       const response = await fetch(
-        `http://localhost:8000/recipes/${recipeId}/images/${imageId}`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/images/${imageId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -55,7 +55,7 @@ function Pin({ pin, index, session, searchParameter, id }) {
   const deleteRecipeRequest = async (recipeId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8000/recipes/${recipeId}/delete`, 
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/delete`, 
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -70,7 +70,7 @@ function Pin({ pin, index, session, searchParameter, id }) {
   const getRecipeCategories = async (recipeId) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/recipes/${recipeId}/categories`,
+        `${process.env.DOMAIN_NAME}/recipes/${recipeId}/categories`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
