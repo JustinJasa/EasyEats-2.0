@@ -147,9 +147,15 @@ routerRecipes.route("/:recipeId/comments/:commentId").get(async (req, res) => {
 //  POST --- Insert a new recipe's basic info
 routerRecipes.route("/new").post(async (req, res) => {
   const { userId, name, description, time_h, time_m, price } = req.body
-  const queryResult = await createRecipe(userId, name, description, time_h, time_m, price)
+  
+  if (name.length > 0 && description.length > 0 && time_h !== null && time_m !== null, price !== null){
+    const queryResult = await createRecipe(userId, name, description, time_h, time_m, price)
+    res.status(200).send(queryResult)
+  }
 
-  res.status(200).send(queryResult)
+  res.status(403).send('The recipe is missing information');
+
+
 })
 
 // POST  --- Insert a recipe's images
@@ -165,6 +171,7 @@ routerRecipes.post("/:recipeId/images/new", upload.array("images"), async (req, 
     }
   }
   res.status(200).send(`Added ${req.files.length} images to recipe ${recipeId}`)
+
 })
 
 //  POST --- Insert a recipe's categories
@@ -172,11 +179,17 @@ routerRecipes.route("/:recipeId/categories/new").post(async (req, res) => {
   const recipeId = req.params.recipeId
   const { categories } = req.body
 
-  for(let i = 0; i < categories.length; i++) {
-    const categoryId = await getCategoryId(categories[i])
-    const queryResult = await createRecipeCategories(recipeId, categoryId[0].category_id)
+  if(categories.length > 0){
+    for(let i = 0; i < categories.length; i++) {
+      const categoryId = await getCategoryId(categories[i])
+      const queryResult = await createRecipeCategories(recipeId, categoryId[0].category_id)
+    }
+    res.status(200).send(`Added ${categories.length} categories to recipe ${recipeId}`)
   }
-  res.status(200).send(`Added ${categories.length} categories to recipe ${recipeId}`)
+
+  res.status(403).send('There must be at least one category');
+
+  
 })
 
 //  POST --- Insert a recipe's ingredients
@@ -184,12 +197,16 @@ routerRecipes.route("/:recipeId/ingredients/new").post(async (req, res) => {
   const recipeId = req.params.recipeId
   const { ingredients } = req.body
 
-  for(let i = 0; i < ingredients.length; i++) {
-    const description = ingredients[i]
-    const queryResult = await createRecipeIngredients(recipeId, description)
+  if(ingredients.length > 0){
+    for(let i = 0; i < ingredients.length; i++){
+      const description = ingredients[i]
+      const queryResult = await createRecipeIngredients(recipeId, description)
+    }
+    res.status(200).send(`Added ${ingredients.length} ingredients to recipe ${recipeId}`)
   }
 
-  res.status(200).send(`Added ${ingredients.length} ingredients to recipe ${recipeId}`)
+  res.status(403).send('There must be at least one ingredient');
+
 })
 
 //  POST --- Insert a recipe's steps
@@ -197,12 +214,17 @@ routerRecipes.route("/:recipeId/steps/new").post(async (req, res) => {
   const recipeId = req.params.recipeId
   const { steps } = req.body
 
-  for(let i = 0; i < steps.length; i++) {
-    const description = steps[i]
-    const queryResult = await createRecipeSteps(recipeId, description)
+  if(steps.length > 0){
+    for(let i = 0; i < steps.length; i++) {
+      const description = steps[i]
+      const queryResult = await createRecipeSteps(recipeId, description)
+    }
+    res.status(200).send(`Added ${steps.length} steps to recipe ${recipeId}`)
   }
+  
+  res.status(403).send('There must be at least one step');
 
-  res.status(200).send(`Added ${steps.length} steps to recipe ${recipeId}`)
+
 })
 
 //  POST --- Insert a new comment on a recipe
@@ -210,9 +232,13 @@ routerRecipes.route("/:recipeId/comments/new").post(async (req, res) => {
   const recipeId = req.params.recipeId
   const { userId, comment } = req.body
 
-  const queryResult = await createComment(userId, recipeId, comment)
+  if(comment.length > 0){
+    const queryResult = await createComment(userId, recipeId, comment)
+    res.status(200).send(queryResult)
+  }
 
-  res.status(200).send(queryResult)
+  res.status(403).send('There must be minimum 10 characters');
+
 })
 
 //  - - - - - - - - - - - - -
