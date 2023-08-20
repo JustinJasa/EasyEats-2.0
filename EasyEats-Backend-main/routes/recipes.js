@@ -30,25 +30,45 @@ const routerRecipes = express.Router()
 // GET  ---  Get all recipes
 routerRecipes.route("/all").get(async (req, res) => {
   const queryResult = await getAllRecipes()
-  res.status(200).send(queryResult)
+  if(queryResult.length === 0) {
+    res.status(404).send(queryResult)
+  }
+  else {
+    res.status(200).send(queryResult)
+  }
 });
 
 // GET  ---  Get recipes by categoryName
 routerRecipes.route("/category/:categoryName").get(async (req, res) => {
   const queryResult = await getRecipesByCategoryName(req.params.categoryName)
-  res.status(200).send(queryResult)
+  if(queryResult.length === 0) {
+    res.status(404).send(queryResult)
+  }
+  else {
+    res.status(200).send(queryResult)
+  }
 });
 
 // GET  ---  Get recipes by recipeName
 routerRecipes.route("/name/:recipeName").get(async (req, res) => {
   const queryResult = await getRecipesByRecipeName(req.params.recipeName)
-  res.status(200).send(queryResult)
+  if(queryResult.length === 0) {
+    res.status(404).send(queryResult)
+  }
+  else {
+    res.status(200).send(queryResult)
+  }
 });
 
 // GET  --- Get recipes by userId
 routerRecipes.route("/user/:userId").get(async (req, res) => {
   const queryResult = await getRecipesByUserId(req.params.userId)
-  res.status(200).send(queryResult)
+  if(queryResult.length === 0) {
+    res.status(404).send(queryResult)
+  }
+  else {
+    res.status(200).send(queryResult)
+  }
 })
 
 // GET  --- Get recipe basic info by recipeId
@@ -57,7 +77,7 @@ routerRecipes.route("/:recipeId").get(async (req, res) => {
     const queryResult = await getRecipeInfo(req.params.recipeId)
     res.status(200).send(queryResult)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 });
 
@@ -69,7 +89,7 @@ routerRecipes.get("/:recipeId/images", async (req, res) => {
     console.log(queryResult)
     res.status(200).send(queryResult)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 })
 
@@ -86,7 +106,7 @@ routerRecipes.get("/:recipeId/images/:imageId", async (req, res) => {
     const routesDirName = "routes"
     res.sendFile(path.dirname(fileURLToPath(import.meta.url)).slice(0, -routesDirName.length) + result[0].path)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 })
 
@@ -96,7 +116,7 @@ routerRecipes.route("/:recipeId/categories").get(async (req, res) => {
     const queryResult = await getRecipeCategories(req.params.recipeId)
     res.status(200).send(queryResult)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 });
 
@@ -106,7 +126,7 @@ routerRecipes.route("/:recipeId/ingredients").get(async (req, res) => {
     const queryResult = await getRecipeIngredients(req.params.recipeId)
     res.status(200).send(queryResult)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 });
 
@@ -116,7 +136,7 @@ routerRecipes.route("/:recipeId/steps").get(async (req, res) => {
     const queryResult = await getRecipeSteps(req.params.recipeId)
     res.status(200).send(queryResult)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 });
 
@@ -126,7 +146,7 @@ routerRecipes.route("/:recipeId/comments/all").get(async (req, res) => {
     const queryResult = await getRecipeComments(req.params.recipeId)
     res.status(200).send(queryResult)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 });
 
@@ -136,7 +156,7 @@ routerRecipes.route("/:recipeId/comments/:commentId").get(async (req, res) => {
     const queryResult = await getComment(req.params.commentId)
     res.status(200).send(queryResult)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 })
 
@@ -146,97 +166,120 @@ routerRecipes.route("/:recipeId/comments/:commentId").get(async (req, res) => {
 
 //  POST --- Insert a new recipe's basic info
 routerRecipes.route("/new").post(async (req, res) => {
-  const { userId, name, description, time_h, time_m, price } = req.body
+  try {
+    const { userId, name, description, time_h, time_m, price } = req.body
   
-  if (name.length > 0 && description.length > 0 && time_h !== null && time_m !== null, price !== null){
-    const queryResult = await createRecipe(userId, name, description, time_h, time_m, price)
-    res.status(200).send(queryResult)
-  }
+    if (name.length > 0 && description.length > 0 && time_h !== null && time_m !== null, price !== null){
+      const queryResult = await createRecipe(userId, name, description, time_h, time_m, price)
+      res.status(200).send(queryResult)
+    }
 
-  res.status(403).send('The recipe is missing information');
+    res.status(403).send('The recipe is missing information');
+  }
+  catch (error) {
+    res.status(500).send("Error:" + error)
+  }
 })
 
 // POST  --- Insert a recipe's images
 routerRecipes.post("/:recipeId/images/new", upload.array("images"), async (req, res) => {
-  const recipeId = req.params.recipeId
+  try {
+    const recipeId = req.params.recipeId
 
-  // If req.files contains images (is not undefined), then add them to the database
-  if(req.files !== undefined) {
-    // Iterate through images and insert each one
-    for(let i = 0; i < req.files.length; i++) {
-      const result = await createRecipeImage(recipeId, req.files[i].filename, req.files[i].path)
-      console.log(result)
+    // If req.files contains images (is not undefined), then add them to the database
+    if(req.files !== undefined) {
+      // Iterate through images and insert each one
+      for(let i = 0; i < req.files.length; i++) {
+        const result = await createRecipeImage(recipeId, req.files[i].filename, req.files[i].path)
+        console.log(result)
+      }
     }
+    res.status(200).send(`Added ${req.files.length} images to recipe ${recipeId}`)
   }
-  res.status(200).send(`Added ${req.files.length} images to recipe ${recipeId}`)
-
+  catch (error) {
+    res.status(500).send("Error:" + error)
+  }
 })
 
 //  POST --- Insert a recipe's categories
 routerRecipes.route("/:recipeId/categories/new").post(async (req, res) => {
-  const recipeId = req.params.recipeId
-  const { categories } = req.body
+  try {
+    const recipeId = req.params.recipeId
+    const { categories } = req.body
 
-  if(categories.length > 0){
-    for(let i = 0; i < categories.length; i++) {
-      const categoryId = await getCategoryId(categories[i])
-      const queryResult = await createRecipeCategories(recipeId, categoryId[0].category_id)
+    if(categories.length > 0){
+      for(let i = 0; i < categories.length; i++) {
+        const categoryId = await getCategoryId(categories[i])
+        const queryResult = await createRecipeCategories(recipeId, categoryId[0].category_id)
+      }
+      res.status(200).send(`Added ${categories.length} categories to recipe ${recipeId}`)
     }
-    res.status(200).send(`Added ${categories.length} categories to recipe ${recipeId}`)
+
+    res.status(403).send('There must be at least one category');
   }
-
-  res.status(403).send('There must be at least one category');
-
-  
+  catch (error) {
+    res.status(500).send("Error:" + error)
+  }
 })
 
 //  POST --- Insert a recipe's ingredients
 routerRecipes.route("/:recipeId/ingredients/new").post(async (req, res) => {
-  const recipeId = req.params.recipeId
-  const { ingredients } = req.body
+  try {
+    const recipeId = req.params.recipeId
+    const { ingredients } = req.body
 
-  if(ingredients.length > 0){
-    for(let i = 0; i < ingredients.length; i++){
-      const description = ingredients[i]
-      const queryResult = await createRecipeIngredients(recipeId, description)
+    if(ingredients.length > 0){
+      for(let i = 0; i < ingredients.length; i++){
+        const description = ingredients[i]
+        const queryResult = await createRecipeIngredients(recipeId, description)
+      }
+      res.status(200).send(`Added ${ingredients.length} ingredients to recipe ${recipeId}`)
     }
-    res.status(200).send(`Added ${ingredients.length} ingredients to recipe ${recipeId}`)
+
+    res.status(403).send('There must be at least one ingredient');
   }
-
-  res.status(403).send('There must be at least one ingredient');
-
+  catch (error) {
+    res.status(500).send("Error:" + error)
+  }
 })
 
 //  POST --- Insert a recipe's steps
 routerRecipes.route("/:recipeId/steps/new").post(async (req, res) => {
-  const recipeId = req.params.recipeId
-  const { steps } = req.body
+  try {
+    const recipeId = req.params.recipeId
+    const { steps } = req.body
 
-  if(steps.length > 0){
-    for(let i = 0; i < steps.length; i++) {
-      const description = steps[i]
-      const queryResult = await createRecipeSteps(recipeId, description)
+    if(steps.length > 0){
+      for(let i = 0; i < steps.length; i++) {
+        const description = steps[i]
+        const queryResult = await createRecipeSteps(recipeId, description)
+      }
+      res.status(200).send(`Added ${steps.length} steps to recipe ${recipeId}`)
     }
-    res.status(200).send(`Added ${steps.length} steps to recipe ${recipeId}`)
-  }
   
-  res.status(403).send('There must be at least one step');
-
-
+    res.status(403).send('There must be at least one step');
+  }
+  catch (error) {
+    res.status(500).send("Error:" + error)
+  }
 })
 
 //  POST --- Insert a new comment on a recipe
 routerRecipes.route("/:recipeId/comments/new").post(async (req, res) => {
-  const recipeId = req.params.recipeId
-  const { userId, comment } = req.body
+  try {
+    const recipeId = req.params.recipeId
+    const { userId, comment } = req.body
 
-  if(comment.length > 0){
-    const queryResult = await createComment(userId, recipeId, comment)
-    res.status(200).send(queryResult)
+    if(comment.length > 0){
+      const queryResult = await createComment(userId, recipeId, comment)
+      res.status(200).send(queryResult)
+    }
+
+    res.status(403).send('There must be minimum 10 characters');
   }
-
-  res.status(403).send('There must be minimum 10 characters');
-
+  catch (error) {
+    res.status(500).send("Error:" + error)
+  }
 })
 
 //  - - - - - - - - - - - - -

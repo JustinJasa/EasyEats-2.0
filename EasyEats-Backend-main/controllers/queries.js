@@ -265,6 +265,11 @@ export const createRecipe = async (userId, name, description, time_h, time_m, pr
     INSERT INTO recipes (user_id, name, description, time_hours, time_minutes, price_range, date)
     VALUES (?, ?, ?, ?, ?, ?, now())`, [userId, name, description, time_h, time_m, price])
 
+    // Throw an error if something goes wrong during insertion
+    if(!newRecipe.insertId) {
+        throw new Error("Recipe insertion failed!")
+    }
+
     const id = newRecipe.insertId
     return getRecipeInfo(id)
 }
@@ -274,6 +279,11 @@ export const createRecipeImage = async (recipeId, imageName, imagePath) => {
     const [newImageInfo] = await pool.query(`
     INSERT INTO images (recipe_id, name, path)
     VALUES (?, ?, ?)`, [recipeId, imageName, imagePath])
+
+    // Throw an error if something goes wrong during insertion
+    if(!newImageInfo.insertId) {
+        throw new Error("Image insertion failed!")
+    }
 
     const id = newImageInfo.insertId
     return getRecipeImage(id)
@@ -285,6 +295,11 @@ export const createRecipeCategories = async (recipeId, categoryId) => {
     INSERT INTO recipe_categories (recipe_id, category_id)
     VALUES (?, ?)`, [recipeId, categoryId])
 
+    // Throw an error if something goes wrong during insertion
+    if(!newRecipeCategory.insertId) {
+        throw new Error("Recipe category insertion failed!")
+    }
+
     const id = newRecipeCategory.insertId
     return getRecipeCategories(recipeId)
 }
@@ -294,6 +309,11 @@ export const createRecipeIngredients = async (recipeId, description) => {
     const [newRecipeIngredient] = await pool.query(`
     INSERT INTO ingredients (recipe_id, description)
     VALUES (?, ?)`, [recipeId, description])
+
+    // Throw an error if something goes wrong during insertion
+    if(!newRecipeIngredient.insertId) {
+        throw new Error("Recipe ingredient insertion failed!")
+    }
 
     const id = newRecipeIngredient.insertId
     return getRecipeIngredients(id)
@@ -305,6 +325,11 @@ export const createRecipeSteps = async (recipeId, description) => {
     INSERT INTO steps (recipe_id, description)
     VALUES (?, ?)`, [recipeId, description])
 
+    // Throw an error if something goes wrong during insertion
+    if(!newRecipeStep.insertId) {
+        throw new Error("Recipe step insertion failed!")
+    }
+
     const id = newRecipeStep.insertId
     return getRecipeSteps(id)
 }
@@ -315,6 +340,11 @@ export const createComment = async (userId, recipeId, comment, rating) => {
     INSERT INTO comments (user_id, recipe_id, comment, date)
     VALUES (?, ?, ?, now())`, [userId, recipeId, comment, rating])
 
+    // Throw an error if something goes wrong during insertion
+    if(!newComment.insertId) {
+        throw new Error("Comment insertion failed!")
+    }
+
     const id = newComment.insertId
     return getComment(id)
 }
@@ -324,6 +354,11 @@ export const createUser = async (username, email, password) => {
     const [newUser] = await pool.query(`
     INSERT INTO users (username, email, password)
     VALUES (?, ?, ?)`, [username, email, password])
+
+    // Throw an error if something goes wrong during insertion
+    if(!newUser.insertId) {
+        throw new Error("User insertion failed!")
+    }
 
     const id = newUser.insertId
     return getUser(id)
