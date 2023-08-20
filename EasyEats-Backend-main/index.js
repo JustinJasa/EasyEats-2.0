@@ -5,6 +5,7 @@ import routerUsers from './routes/users.js'
 import routerAuth from './routes/auth.js'
 import cors from 'cors'
 import checkJwt from './middleware/tokenAuth.js'
+import checkAuthorization from './middleware/checkAuth'
 
 const PORT = process.env.PORT || 8000
 
@@ -13,9 +14,9 @@ app.use(cors())
 
 app.use(express.json())
 
-app.use('/categories', checkJwt, routerCategories)
-app.use('/recipes',  checkJwt, routerRecipes)
-app.use('/users',  checkJwt, routerUsers)
+app.use('/categories', checkJwt, checkAuthorization, routerCategories)
+app.use('/recipes',  checkJwt, checkAuthorization, routerRecipes)
+app.use('/users',  checkJwt, checkAuthorization, routerUsers)
 app.use('/auth', routerAuth)
 
 
