@@ -30,25 +30,45 @@ const routerRecipes = express.Router()
 // GET  ---  Get all recipes
 routerRecipes.route("/all").get(async (req, res) => {
   const queryResult = await getAllRecipes()
-  res.status(200).send(queryResult)
+  if(queryResult.length === 0) {
+    res.status(404).send(queryResult)
+  }
+  else {
+    res.status(200).send(queryResult)
+  }
 });
 
 // GET  ---  Get recipes by categoryName
 routerRecipes.route("/category/:categoryName").get(async (req, res) => {
   const queryResult = await getRecipesByCategoryName(req.params.categoryName)
-  res.status(200).send(queryResult)
+  if(queryResult.length === 0) {
+    res.status(404).send(queryResult)
+  }
+  else {
+    res.status(200).send(queryResult)
+  }
 });
 
 // GET  ---  Get recipes by recipeName
 routerRecipes.route("/name/:recipeName").get(async (req, res) => {
   const queryResult = await getRecipesByRecipeName(req.params.recipeName)
-  res.status(200).send(queryResult)
+  if(queryResult.length === 0) {
+    res.status(404).send(queryResult)
+  }
+  else {
+    res.status(200).send(queryResult)
+  }
 });
 
 // GET  --- Get recipes by userId
 routerRecipes.route("/user/:userId").get(async (req, res) => {
   const queryResult = await getRecipesByUserId(req.params.userId)
-  res.status(200).send(queryResult)
+  if(queryResult.length === 0) {
+    res.status(404).send(queryResult)
+  }
+  else {
+    res.status(200).send(queryResult)
+  }
 })
 
 // GET  --- Get recipe basic info by recipeId
@@ -57,7 +77,7 @@ routerRecipes.route("/:recipeId").get(async (req, res) => {
     const queryResult = await getRecipeInfo(req.params.recipeId)
     res.status(200).send(queryResult)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 });
 
@@ -69,7 +89,7 @@ routerRecipes.get("/:recipeId/images", async (req, res) => {
     console.log(queryResult)
     res.status(200).send(queryResult)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 })
 
@@ -86,7 +106,7 @@ routerRecipes.get("/:recipeId/images/:imageId", async (req, res) => {
     const routesDirName = "routes"
     res.sendFile(path.dirname(fileURLToPath(import.meta.url)).slice(0, -routesDirName.length) + result[0].path)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 })
 
@@ -96,7 +116,7 @@ routerRecipes.route("/:recipeId/categories").get(async (req, res) => {
     const queryResult = await getRecipeCategories(req.params.recipeId)
     res.status(200).send(queryResult)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 });
 
@@ -106,7 +126,7 @@ routerRecipes.route("/:recipeId/ingredients").get(async (req, res) => {
     const queryResult = await getRecipeIngredients(req.params.recipeId)
     res.status(200).send(queryResult)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 });
 
@@ -116,7 +136,7 @@ routerRecipes.route("/:recipeId/steps").get(async (req, res) => {
     const queryResult = await getRecipeSteps(req.params.recipeId)
     res.status(200).send(queryResult)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 });
 
@@ -126,7 +146,7 @@ routerRecipes.route("/:recipeId/comments/all").get(async (req, res) => {
     const queryResult = await getRecipeComments(req.params.recipeId)
     res.status(200).send(queryResult)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 });
 
@@ -136,7 +156,7 @@ routerRecipes.route("/:recipeId/comments/:commentId").get(async (req, res) => {
     const queryResult = await getComment(req.params.commentId)
     res.status(200).send(queryResult)
   } catch(error) {
-    res.status(500).send("Error:" + error)
+    res.status(404).send("Error:" + error)
   }
 })
 
