@@ -154,8 +154,6 @@ routerRecipes.route("/new").post(async (req, res) => {
   }
 
   res.status(403).send('The recipe is missing information');
-
-
 })
 
 // POST  --- Insert a recipe's images

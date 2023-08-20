@@ -7,7 +7,7 @@ const checkJwt = (req, res, next) => {
     if (token == null) 
         return res.sendStatus(401)
 
-    jwt.verify(token, "cat123", (err, user) => {
+    jwt.verify(token, process.env.JWT_TOKEN_KEY, (err, user) => {
         if(err) 
             return res.sendStatus(403)
         req.user = user

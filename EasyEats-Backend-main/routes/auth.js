@@ -70,7 +70,7 @@ routerAuth.post("/signup", async (req, res) => {
     const user = await createUser(username, email, hashValue)
     
     // generate jwt token
-    const token = jwt.sign({ id: user.id }, 'cat123', { expiresIn: "1h" });
+    const token = jwt.sign({ id: user.id }, process.env.JWT_TOKEN_KEY, { expiresIn: "1h" });
 
     res.status(200).json({ success:1, message:"Account Created!", user, token });
   
