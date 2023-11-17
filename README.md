@@ -1,4 +1,9 @@
 ## Introduction
+
+An extension to these repositories
+https://github.com/JustinJasa/EasyEats
+https://github.com/JustinJasa/EasyEats-Backend
+
 Welcome to the EasyEats repository! EasyEats is a food-sharing platform tailored specifically for students during their exchange studies. It is designed to allow users to share, discover, and discuss delicious recipes from around the world. With a focus on simplicity and community, EasyEats makes it easy to connect over the universal language of food.
 
 ## Project Overview
