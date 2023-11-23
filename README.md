@@ -7,7 +7,7 @@ https://github.com/JustinJasa/EasyEats-Backend
 Welcome to the EasyEats repository! EasyEats is a food-sharing platform tailored specifically for students during their exchange studies. It is designed to allow users to share, discover, and discuss delicious recipes from around the world. With a focus on simplicity and community, EasyEats makes it easy to connect over the universal language of food.
 
 ## Project Overview
-EasyEats was developed as part of a cultural exchange project, providing a way for students to share a piece of their home with others through the joy of cooking and eating. The application is built using modern technologies: a Next.js frontend, an Express.js backend, and Docker for containerization, ensuring an efficient and scalable environment.
+EasyEats was developed as part my exchange exchange project, providing a way for students to share a piece of their home with others through the joy of cooking and eating. The application is built using modern technologies: a Next.js frontend, an Express.js backend, and Docker for containerization, ensuring an efficient and scalable environment.
 
 ## Key Features
 - User Authentication: Secure login system to manage user access and protect personal information.
